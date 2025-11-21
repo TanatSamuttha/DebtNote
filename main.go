@@ -28,7 +28,7 @@ func AddDebt(c *fiber.Ctx) error {
 func main() {
 	app := fiber.New()
 
-	app.Get("/AddDebt", AddDebt)
+	app.Post("/AddDebt", AddDebt)
 
 	app.Listen(":8080")
 }

@@ -4,10 +4,10 @@ import "github.com/gofiber/fiber/v2"
 
 type Debt struct {
 	ID           int    `json: "id"`
-	creditorID   int    `json: "creditor_id"`
-	creditorName string `json: "creditor_name"`
-	debtorID     int    `json: "debtor_id"`
-	debtorName   string `json: "debtor_name"`
+	creditorID   int    `json: "creditorid"`
+	creditorName string `json: "creditorname"`
+	debtorID     int    `json: "debtorid"`
+	debtorName   string `json: "debtorname"`
 	amount       int    `json: "amount"`
 }
 

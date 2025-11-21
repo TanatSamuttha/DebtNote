@@ -1,14 +1,16 @@
 package main
 
-import "github.com/gofiber/fiber/v2"
+import (
+	"github.com/gofiber/fiber/v2"
+)
 
 type Debt struct {
-	ID           int    `json: "id"`
-	creditorID   int    `json: "creditorid"`
-	creditorName string `json: "creditorname"`
-	debtorID     int    `json: "debtorid"`
-	debtorName   string `json: "debtorname"`
-	amount       int    `json: "amount"`
+	ID           int    `json:"id"`
+	CreditorID   int    `json:"creditorid"`
+	CreditorName string `json:"creditorname"`
+	DebtorID     int    `json:"debtorid"`
+	DebtorName   string `json:"debtorname"`
+	Amount       int    `json:"amount"`
 }
 
 var dummyDataBase []Debt

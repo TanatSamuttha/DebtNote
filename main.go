@@ -1,6 +1,6 @@
 package main
 
-import "github.com/gofiber/fiber"
+import "github.com/gofiber/fiber/v2"
 
 type Debt struct {
 	ID           int    `json: "id"`
@@ -9,6 +9,15 @@ type Debt struct {
 	debtorID     int    `json: debtor_id`
 	debtorName   string `json: debtor_name`
 	amount       int    `json: amount`
+}
+
+func AddDebt(c *fiber.Ctx) error {
+	newDebt := new(Debt)
+
+	if err := c.BodyParser(newDebt); err != nil {
+		return c.SendStatus(fiber.StatusBadRequest)
+	}
+	return c.JSON(newDebt)
 }
 
 func main() {

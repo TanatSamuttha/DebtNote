@@ -6,9 +6,9 @@ type Debt struct {
 	ID           int    `json: "id"`
 	creditorID   int    `json: "creditor_id"`
 	creditorName string `json: "creditor_name"`
-	debtorID     int    `json: debtor_id`
-	debtorName   string `json: debtor_name`
-	amount       int    `json: amount`
+	debtorID     int    `json: "debtor_id"`
+	debtorName   string `json: "debtor_name"`
+	amount       int    `json: "amount"`
 }
 
 var dummyDataBase []Debt

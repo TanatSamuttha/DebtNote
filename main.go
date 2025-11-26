@@ -13,6 +13,12 @@ type Debt struct {
 	Amount       int    `json:"amount"`
 }
 
+type ShowDebt struct {
+	CreditorName string `json:"creditorname"`
+	DebtorName   string `json:"debtorname"`
+	Amount       int    `json:"amount"`
+}
+
 var dummyDataBase []Debt
 
 func AddDebt(c *fiber.Ctx) error {
@@ -25,6 +31,18 @@ func AddDebt(c *fiber.Ctx) error {
 	dummyDataBase = append(dummyDataBase, *newDebt)
 
 	return c.JSON(newDebt)
+}
+
+func GetDebts(c *fiber.Ctx) error {
+	var debts []ShowDebt
+	for _, debt := range dummyDataBase {
+		debts = append(debts, ShowDebt{
+			CreditorName: debt.CreditorName,
+			DebtorName: debt.DebtorName,
+			Amount: debt.Amount,
+		})
+	}
+	return c.JSON(debts)
 }
 
 func main() {

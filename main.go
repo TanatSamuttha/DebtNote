@@ -50,5 +50,7 @@ func main() {
 
 	app.Post("/AddDebt", AddDebt)
 
+	app.Get("/GetDebts", GetDebts)
+
 	app.Listen(":8080")
 }

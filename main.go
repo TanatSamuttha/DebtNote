@@ -13,17 +13,18 @@ import (
 
 type Debt struct {
 	gorm.Model
-	CreditorID   int    `json:"creditorid"`
+	CreditorID   uint    `json:"creditorid"`
 	Creditor     User	`gorm:"foreignKey:CreditorID"`
-	DebtorID     int    `json:"debtorid"`
+	DebtorID     uint    `json:"debtorid"`
 	Debtor		 User	`gorm:"foreignKey:DebtorID"`
-	Amount       int    `json:"amount"`
+	Amount       uint    `json:"amount"`
 }
 
 type ShowDebt struct {
+	gorm.Model
 	CreditorName string `json:"creditorname"`
 	DebtorName   string `json:"debtorname"`
-	Amount       int    `json:"amount"`
+	Amount       uint   `json:"amount"`
 }
 
 type User struct {
@@ -34,29 +35,40 @@ type User struct {
 
 var dummyDataBase []Debt
 
-func AddDebt(c *fiber.Ctx) error {
-	newDebt := new(Debt)
+func AddDebt(db *gorm.DB, c *fiber.Ctx) error {
+	inputDebt := new(ShowDebt)
 
-	if err := c.BodyParser(newDebt); err != nil {
+	if err := c.BodyParser(inputDebt); err != nil {
 		return c.SendStatus(fiber.StatusBadRequest)
 	}
 
-	dummyDataBase = append(dummyDataBase, *newDebt)
+	newDebt := Debt{CreditorID: getUserID(db, inputDebt.CreditorName),
+		DebtorID: getUserID(db, inputDebt.DebtorName),
+		Amount: inputDebt.Amount,
+	}
+
+	fmt.Println(newDebt)
+
+	result := db.Create(&newDebt)
+	if result.Error != nil {
+		return c.SendStatus(fiber.StatusBadRequest)
+	}
 
 	return c.JSON(newDebt)
 }
 
-// func GetDebts(c *fiber.Ctx) error {
-// 	var debts []ShowDebt
-// 	for _, debt := range dummyDataBase {
-// 		debts = append(debts, ShowDebt{
-// 			CreditorName: debt.CreditorName,
-// 			DebtorName: debt.DebtorName,
-// 			Amount: debt.Amount,
-// 		})
-// 	}
-// 	return c.JSON(debts)
-// }
+func getUserID(db *gorm.DB, username string) uint {
+	var user User
+	db.First(&user, username)
+	fmt.Println(username, user.ID)
+	return user.ID
+}
+
+func GetDebts(db *gorm.DB, c *fiber.Ctx) error {
+	var debts []ShowDebt
+	db.Find(&debts)
+	return c.JSON(debts)
+}
 
 func getStringEnv(key string, fallback string) string {
 	if value, exist := os.LookupEnv(key); exist {
@@ -104,11 +116,15 @@ func main() {
 		panic(err)
 	}
 
-	// app := fiber.New()
+	app := fiber.New()
 
-	// app.Post("/AddDebt", AddDebt)
+	app.Post("/AddDebt", func (c *fiber.Ctx) error {
+		return AddDebt(db, c)
+	})
 
-	// app.Get("/GetDebts", GetDebts)
+	app.Get("/GetDebts", func (c *fiber.Ctx) error  {
+		return GetDebts(db, c)
+	})
 
-	// app.Listen(":8080")
+	app.Listen(":8080")
 }

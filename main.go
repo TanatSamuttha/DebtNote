@@ -70,5 +70,9 @@ func main() {
 		return services.AddUser(db, c)
 	})
 
+	app.Post("/Register", func (c *fiber.Ctx) error {
+		return services.Register(db, c)
+	})
+
 	app.Listen(":8080")
 }

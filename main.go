@@ -66,10 +66,6 @@ func main() {
 		return services.GetDebts(db, c)
 	})
 
-	app.Post("/AddUser", func (c *fiber.Ctx) error {
-		return services.AddUser(db, c)
-	})
-
 	app.Post("/Register", func (c *fiber.Ctx) error {
 		return services.Register(db, c)
 	})

@@ -7,10 +7,23 @@ import (
 	"main.go/core/models"
 )
 
+func usernameIsExist(db *gorm.DB, username string) (bool, error) {
+	var count int64
+	result := db.Where("username = ?", username).Count(&count)
+	return (count > 0), result.Error
+}
+
 func Register(db *gorm.DB, c *fiber.Ctx) error{
 	newUser := new(models.User)
 	if err := c.BodyParser(newUser); err != nil {
 		return c.SendStatus(fiber.StatusBadRequest)
+	}
+	
+	isExist, err := usernameIsExist(db, newUser.UserName);
+	if err != nil {
+		return c.SendStatus(fiber.StatusInternalServerError)
+	} else if  isExist {
+		return c.SendString("Registor fail: Username is already exist")
 	}
 
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(newUser.Password), bcrypt.DefaultCost)

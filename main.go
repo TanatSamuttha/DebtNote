@@ -14,9 +14,9 @@ import (
 type Debt struct {
 	gorm.Model
 	CreditorID   uint    `json:"creditorid"`
-	Creditor     User	`gorm:"foreignKey:CreditorID"`
+	Creditor     User	 `gorm:"foreignKey:CreditorID"`
 	DebtorID     uint    `json:"debtorid"`
-	Debtor		 User	`gorm:"foreignKey:DebtorID"`
+	Debtor		 User	 `gorm:"foreignKey:DebtorID"`
 	Amount       uint    `json:"amount"`
 }
 
@@ -39,6 +39,7 @@ func AddDebt(db *gorm.DB, c *fiber.Ctx) error {
 	inputDebt := new(ShowDebt)
 
 	if err := c.BodyParser(inputDebt); err != nil {
+		fmt.Println(inputDebt)
 		return c.SendStatus(fiber.StatusBadRequest)
 	}
 
@@ -54,7 +55,7 @@ func AddDebt(db *gorm.DB, c *fiber.Ctx) error {
 		return c.SendStatus(fiber.StatusBadRequest)
 	}
 
-	return c.JSON(newDebt)
+	return c.SendStatus(fiber.StatusOK)
 }
 
 func getUserID(db *gorm.DB, username string) uint {
@@ -75,6 +76,20 @@ func getStringEnv(key string, fallback string) string {
 		return value
 	}
 	return fallback
+}
+
+func AddUser(db *gorm.DB, c *fiber.Ctx) error {
+	user := new(User)
+	if err := c.BodyParser(user); err != nil {
+		fmt.Println(err)
+		return c.SendStatus(fiber.StatusBadRequest)
+	}
+	result := db.Create(&user)
+	if result.Error != nil {
+		return c.SendStatus(fiber.StatusBadRequest)
+	}
+
+	return c.SendStatus(fiber.StatusOK)
 }
 
 func getIntEnv(key string, fallback int) int {
@@ -124,6 +139,10 @@ func main() {
 
 	app.Get("/GetDebts", func (c *fiber.Ctx) error  {
 		return GetDebts(db, c)
+	})
+
+	app.Post("/AddUser", func (c *fiber.Ctx) error {
+		return AddUser(db, c)
 	})
 
 	app.Listen(":8080")

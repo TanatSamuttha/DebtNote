@@ -6,6 +6,9 @@ So, this web application will solve this problem by sharing an amount of money t
 ## TechStack
 
 Backend language: Go
+
 API Framework: Fiber
+
 ORM: GORM
+
 Database: Postgres

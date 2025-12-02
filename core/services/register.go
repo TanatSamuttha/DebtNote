@@ -21,7 +21,6 @@ func Register(db *gorm.DB, c *fiber.Ctx) error{
 	
 	isExist, err := usernameIsExist(db, newUser.UserName);
 	if err != nil {
-		return c.SendString(string(err.Error()))
 		return c.SendStatus(fiber.StatusInternalServerError)
 	} else if  isExist {
 		return c.SendString("Registor fail: Username is already exist")

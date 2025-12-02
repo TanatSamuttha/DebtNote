@@ -9,7 +9,7 @@ import (
 
 func usernameIsExist(db *gorm.DB, username string) (bool, error) {
 	var count int64
-	result := db.Where("username = ?", username).Count(&count)
+	result := db.Table("users").Where("user_name = ?", username).Count(&count)
 	return (count > 0), result.Error
 }
 
@@ -21,6 +21,7 @@ func Register(db *gorm.DB, c *fiber.Ctx) error{
 	
 	isExist, err := usernameIsExist(db, newUser.UserName);
 	if err != nil {
+		return c.SendString(string(err.Error()))
 		return c.SendStatus(fiber.StatusInternalServerError)
 	} else if  isExist {
 		return c.SendString("Registor fail: Username is already exist")
@@ -34,7 +35,7 @@ func Register(db *gorm.DB, c *fiber.Ctx) error{
 	newUser.Password = string(hashedPassword)
 	result := db.Create(newUser)
 	if result.Error != nil {
-		c.SendStatus(fiber.StatusInternalServerError)
+		return c.SendStatus(fiber.StatusInternalServerError)
 	}
 
 	return c.SendStatus(fiber.StatusOK)

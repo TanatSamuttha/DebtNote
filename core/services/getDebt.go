@@ -9,6 +9,6 @@ import (
 
 func GetDebts(db *gorm.DB, c *fiber.Ctx) error {
 	var debts []models.ShowDebt
-	db.Find(&debts)
+	db.Preload("Creditor").Preload("Debtor").Find(&debts)
 	return c.JSON(debts)
 }

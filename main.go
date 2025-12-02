@@ -39,7 +39,6 @@ func AddDebt(db *gorm.DB, c *fiber.Ctx) error {
 	inputDebt := new(ShowDebt)
 
 	if err := c.BodyParser(inputDebt); err != nil {
-		fmt.Println(inputDebt)
 		return c.SendStatus(fiber.StatusBadRequest)
 	}
 
@@ -47,8 +46,6 @@ func AddDebt(db *gorm.DB, c *fiber.Ctx) error {
 		DebtorID: getUserID(db, inputDebt.DebtorName),
 		Amount: inputDebt.Amount,
 	}
-
-	fmt.Println(newDebt)
 
 	result := db.Create(&newDebt)
 	if result.Error != nil {
@@ -60,8 +57,7 @@ func AddDebt(db *gorm.DB, c *fiber.Ctx) error {
 
 func getUserID(db *gorm.DB, username string) uint {
 	var user User
-	db.First(&user, username)
-	fmt.Println(username, user.ID)
+	db.Where("user_name = ?", username).First(&user)
 	return user.ID
 }
 
@@ -81,7 +77,6 @@ func getStringEnv(key string, fallback string) string {
 func AddUser(db *gorm.DB, c *fiber.Ctx) error {
 	user := new(User)
 	if err := c.BodyParser(user); err != nil {
-		fmt.Println(err)
 		return c.SendStatus(fiber.StatusBadRequest)
 	}
 	result := db.Create(&user)
@@ -119,7 +114,6 @@ func main() {
 	user := getStringEnv("DB_UserName", "")
 	password := getStringEnv("DB_Password", "")
 	dbname := "mydatabase"
-	fmt.Println("port", port)
 	dsn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {

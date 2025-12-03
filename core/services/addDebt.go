@@ -9,7 +9,7 @@ import (
 
 func getUserID(db *gorm.DB, username string) uint {
 	var user models.User
-	db.Where("user_name = ?", username).First(&user)
+	db.Table("users").Where("user_name = ?", username).First(&user)
 	return user.ID
 }
 

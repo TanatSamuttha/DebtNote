@@ -1,8 +1,9 @@
 package services
 
 import (
-	"time"
+	"fmt"
 	"os"
+	"time"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v4"
@@ -40,7 +41,7 @@ func Login(db *gorm.DB, c *fiber.Ctx) error {
 	claims["user_id"] = loginUser.ID
 	claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
 
-	tokenValue, err := token.SignedString(getJwtSecretKey("JWT_SecretKey", "secret"))
+	tokenValue, err := token.SignedString([]byte(getJwtSecretKey("JWT_SecretKey", "secret")))
 	if err != nil {
 		return c.SendStatus(fiber.StatusInternalServerError)
 	}

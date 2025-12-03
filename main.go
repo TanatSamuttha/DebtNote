@@ -1,8 +1,9 @@
 package main
 
 import (
-	"main.go/core/services"
 	"main.go/core/models"
+	"main.go/core/services"
+	"main.go/core/services/middleware"
 
 	"fmt"
 	"os"
@@ -57,6 +58,9 @@ func main() {
 	}
 
 	app := fiber.New()
+
+	app.Use("/add-debt", middleware.AuthRequire)
+	app.Use("/get-debt", middleware.AuthRequire)
 	
 	app.Post("/register", func (c *fiber.Ctx) error {
 		return services.Register(db, c)

@@ -57,17 +57,21 @@ func main() {
 	}
 
 	app := fiber.New()
+	
+	app.Post("/register", func (c *fiber.Ctx) error {
+		return services.Register(db, c)
+	})
 
-	app.Post("/AddDebt", func (c *fiber.Ctx) error {
+	app.Post("/login", func (c *fiber.Ctx) error {
+		return services.Login(db, c)
+	})
+
+	app.Post("/add-debt", func (c *fiber.Ctx) error {
 		return services.AddDebt(db, c)
 	})
 
-	app.Get("/GetDebts", func (c *fiber.Ctx) error  {
+	app.Get("/get-debts", func (c *fiber.Ctx) error  {
 		return services.GetDebts(db, c)
-	})
-
-	app.Post("/Register", func (c *fiber.Ctx) error {
-		return services.Register(db, c)
 	})
 
 	app.Listen(":8080")

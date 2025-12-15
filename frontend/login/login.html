@@ -4,15 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="login.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>Document</title>
 </head>
 <body>
-    <div class="information-box">
+    <div class="information-block">
         <h3 class="login-header">Login</h3>
-        <form>
-            <input id="username" name="username">
-            <input id="password" name="password" type="password">
+        <form id="login-form">
+            <div>
+                <h4 class="explain-text">username</h4>
+                <input class="fill-box" id="username" name="username">
+            </div>
+            <div>
+                <h4 class="explain-text">password</h4>
+                <input class="fill-box" id="password" name="password" type="password">
+            </div>
+            <button type="submit" class="login-button">Login</button>
         </form>
     </div>
+    <script src="login.js"></script>
 </body>
 </html>

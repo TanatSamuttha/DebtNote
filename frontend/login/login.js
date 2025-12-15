@@ -12,4 +12,15 @@ function login(event){
             password: password
         }
     })
+    .then(res => {
+        console.log(res.data)
+        if(res.data != "OK"){
+            const informationBox = document.querySelector(".information-block");
+            if (!informationBox) return;
+            informationBox.querySelectorAll("p").forEach(p => p.remove());
+            const p = document.createElement("p");
+            p.textContent = res.data;
+            informationBox.appendChild(p);
+        }
+    })
 }

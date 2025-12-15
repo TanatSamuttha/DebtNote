@@ -10,6 +10,7 @@ import (
 	"strconv"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -57,10 +58,9 @@ func main() {
 		panic(err)
 	}
 
-	fmt.Print(db.Config)
-
 	app := fiber.New()
 
+	app.Use(cors.New())
 	app.Use("/add-debt", middleware.AuthRequire)
 	app.Use("/get-debt", middleware.AuthRequire)
 	

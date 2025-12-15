@@ -1,0 +1,40 @@
+body {
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.information-block {
+    width: 300px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: gray;
+    border-radius: 10px;
+}
+
+.register-header {
+    text-align: center;
+}
+
+form {
+    margin: 10px;
+}
+
+.fill-box {
+    margin: 0;
+    margin-bottom: 10px;
+    display: inline;
+}
+
+.explain-text {
+    margin: 0;
+    margin-bottom: 10px;
+    margin-right: 5px;
+    display: inline;
+}
+
+.register-button {
+    align-self: auto;
+}

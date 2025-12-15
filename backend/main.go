@@ -57,6 +57,8 @@ func main() {
 		panic(err)
 	}
 
+	fmt.Print(db.Config)
+
 	app := fiber.New()
 
 	app.Use("/add-debt", middleware.AuthRequire)

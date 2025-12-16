@@ -62,7 +62,7 @@ func main() {
 
 	app.Use(cors.New())
 	app.Use("/add-debt", middleware.AuthRequire)
-	app.Use("/get-debt", middleware.AuthRequire)
+	app.Use("/my-debts", middleware.AuthRequire)
 	
 	app.Post("/register", func (c *fiber.Ctx) error {
 		return services.Register(db, c)
@@ -76,8 +76,8 @@ func main() {
 		return services.AddDebt(db, c)
 	})
 
-	app.Get("/get-debts", func (c *fiber.Ctx) error  {
-		return services.GetDebts(db, c)
+	app.Get("/my-debts", func (c *fiber.Ctx) error  {
+		return services.MyDebts(db, c)
 	})
 
 	app.Listen(":8080")

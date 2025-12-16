@@ -1,9 +1,9 @@
 package main
 
 import (
-	"main.go/core/models"
-	"main.go/core/services"
-	"main.go/core/services/middleware"
+	"debtnote/core/models"
+	"debtnote/core/services"
+	"debtnote/core/services/middleware"
 
 	"fmt"
 	"os"

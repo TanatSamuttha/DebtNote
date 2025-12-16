@@ -4,7 +4,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
-	"main.go/core/models"
+	"debtnote/core/models"
 )
 
 func usernameIsExist(db *gorm.DB, username string) (bool, error) {

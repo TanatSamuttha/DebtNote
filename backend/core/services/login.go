@@ -8,7 +8,7 @@ import (
 	"github.com/golang-jwt/jwt/v4"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
-	"main.go/core/models"
+	"debtnote/core/models"
 )
 
 func getJwtSecretKey(key string, fallback string) string {

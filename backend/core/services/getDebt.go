@@ -1,7 +1,7 @@
 package services
 
 import (
-	"main.go/core/models"
+	"debtnote/core/models"
 	
 	"gorm.io/gorm"
 	"github.com/gofiber/fiber/v2"

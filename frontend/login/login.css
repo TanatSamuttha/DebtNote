@@ -38,3 +38,7 @@ form {
 .login-button {
     align-self: auto;
 }
+
+.dont-have-account {
+    margin-left: 10px;
+}

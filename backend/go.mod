@@ -1,4 +1,4 @@
-module main.go
+module debtnote
 
 go 1.24.3
 

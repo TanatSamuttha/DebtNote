@@ -14,7 +14,7 @@ body {
     border-radius: 10px;
 }
 
-.login-header {
+.register-header {
     text-align: center;
 }
 
@@ -35,10 +35,10 @@ form {
     display: inline;
 }
 
-.login-button {
+.register-button {
     align-self: auto;
 }
 
-.dont-have-account {
+.have-account {
     margin-left: 10px;
 }

@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="register.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>Document</title>
 </head>
 <body>
     <div class="information-block">
-        <h3 class="login-header">Login</h3>
-        <form id="login-form">
+        <h3 class="register-header">Register</h3>
+        <form id="register-form">
             <div>
                 <h4 class="explain-text">username</h4>
                 <input class="fill-box" id="username" name="username">
@@ -19,10 +19,10 @@
                 <h4 class="explain-text">password</h4>
                 <input class="fill-box" id="password" name="password" type="password">
             </div>
-            <button type="submit" class="login-button">Login</button>
+            <button type="submit" class="register-button">Register</button>
         </form>
-        <p class="dont-have-account">Don't have an account? <a href="/register/register.html">Register</a></p>
+        <p class="have-account">Already have an account? <a href="/login/login.html">Login</a></p>
     </div>
-    <script src="login.js"></script>
+    <script src="register.js"></script>
 </body>
 </html>

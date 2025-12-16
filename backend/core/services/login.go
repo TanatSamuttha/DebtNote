@@ -37,7 +37,7 @@ func Login(db *gorm.DB, c *fiber.Ctx) error {
 
 	token := jwt.New(jwt.SigningMethodHS256)
 	claims := token.Claims.(jwt.MapClaims)
-	claims["user_id"] = loginUser.ID
+	claims["user_id"] = dbUser.ID
 	claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
 
 	tokenValue, err := token.SignedString([]byte(getJwtSecretKey("JWT_SecretKey", "secret")))

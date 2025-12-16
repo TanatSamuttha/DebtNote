@@ -1,7 +1,9 @@
 package middleware
 
 import (
+	"fmt"
 	"os"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v4"
 )
@@ -16,9 +18,12 @@ func getJwtSecretKey(key string, fallback string) string {
 func AuthRequire(c *fiber.Ctx) error {
 	cookie := c.Cookies("jwt")
 
-	token, err := jwt.ParseWithClaims(cookie, &jwt.StandardClaims{}, func (token *jwt.Token) (interface{}, error) {
+	token, err := jwt.Parse(cookie, func (token *jwt.Token) (interface{}, error) {
 		return []byte(getJwtSecretKey("JWT_SecretKey", "secret")), nil
 	})
+
+	claims := token.Claims.(jwt.MapClaims)
+	fmt.Print(claims)
 
 	if err != nil || !token.Valid {
 		return c.SendStatus(fiber.StatusUnauthorized)

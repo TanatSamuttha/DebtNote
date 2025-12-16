@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"fmt"
 	"os"
 
 	"github.com/gofiber/fiber/v2"
@@ -23,11 +22,13 @@ func AuthRequire(c *fiber.Ctx) error {
 	})
 
 	claims := token.Claims.(jwt.MapClaims)
-	fmt.Print(claims)
+	user_id := uint(claims["user_id"].(float64))
 
 	if err != nil || !token.Valid {
 		return c.SendStatus(fiber.StatusUnauthorized)
 	}
+
+	c.Locals("user_id", user_id)
 
 	return c.Next()
 }
